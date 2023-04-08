@@ -1,3 +1,5 @@
+  //! need to find common name for border countries short name.
+
 import { useEffect, useState } from "react";
 import Navbar from "./Components/Navbar";
 import Inputs from "./Components/Inputs";
@@ -20,19 +22,20 @@ function App() {
   const [defaultURL, setDefaultURL] = useState(
     "https://restcountries.com/v3.1/region/europe"
   );
-  const [allCountriesData, setAllCountriesData] = useState([]);
+  // const [allCountriesData, setAllCountriesData] = useState([]);
   let regionFetchText = `https://restcountries.com/v3.1/region/${region}`;
   let countryFetchText = `https://restcountries.com/v3.1/name/${country}`;
 
-  useEffect(() => {
-    fetch("https://restcountries.com/v3.1/all")
-      .then((res) => res.json())
-      .then((data) => setAllCountriesData(data));
-    console.log(allCountriesData);
-  }, [defaultURL]);
+  // useEffect(() => {
+  //   fetch("https://restcountries.com/v3.1/all")
+  //     .then((res) => res.json())
+  //     .then((data) => setAllCountriesData(data));
+  //   console.log(allCountriesData);
+  // }, [defaultURL]);
 
   useEffect(() => {
-    fetch(`${defaultURL}`)
+    const abortCont = new AbortController();
+    fetch(`${defaultURL}`,{signal: abortCont.signal})
       .then((res) => {
         if (!res.ok) {
           setIsWorking(false);
@@ -47,10 +50,16 @@ function App() {
         setFetchedData(data);
       })
       .catch((error) => {
-        setIsWorking(false);
-        setIsPending(false);
-        console.log(error);
+        if(error.name === 'AbortError') {
+          console.log('Fetch aborted!');
+        } else {
+          setIsWorking(false);
+          setIsPending(false);
+          console.log(error);
+        }
       });
+
+    return () => abortCont.abort();
   }, [defaultURL]);
 
   function themeToggle() {
@@ -61,7 +70,6 @@ function App() {
       document.body.style.backgroundColor = "#f1f5f9";
     }
     setIsDark((isDark) => !isDark);
-    console.log("theme toggle func ran.");
   }
 
   function regionOptionHandler(reg) {
