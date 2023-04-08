@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {MdOutlineDarkMode} from 'react-icons/md'
 import {MdOutlineLightMode} from 'react-icons/md'
 import {GiWorld} from 'react-icons/gi'

@@ -11,7 +11,7 @@ const Inputs = ({
 }) => {
   return (
     <div className="inputs-container flex md:flex-row flex-col space-y-6 md:space-y-0 md:items-center md:justify-between w-full px-6 md:px-12 mb-12">
-      <div className="search-country flex items-center space-x-4 bg-white dark:bg-slate-800 px-6 py-4 w-full md:w-1/2 rounded-md shadow-lg">
+      <div className="search-country flex items-center space-x-4 bg-white dark:bg-slate-800 px-6 py-4 w-full md:w-1/2 rounded-md shadow-lg dark:shadow-sm dark:shadow-slate-200">
         <FaSearch
           className="text-slate-400 dark:text-slate-50 hover:text-slate-900 text-lg cursor-pointer"
           onClick={countrySearchHandler}
@@ -23,13 +23,13 @@ const Inputs = ({
           value={country}
           onChange={(e) => countryInputHandler(e.target.value)}
           onKeyUp={(e) => {
-            if(e.key === 'Enter') {
+            if (e.key === "Enter") {
               countrySearchHandler();
             }
           }}
         />
       </div>
-      <div className="flex items-center justify-between md:space-x-4 rounded-md bg-white dark:bg-slate-800 shadow-lg pr-2">
+      <div className="flex items-center justify-between md:space-x-4 rounded-md bg-white dark:bg-slate-800 shadow-lg dark:shadow-sm dark:shadow-slate-200 pr-2">
         <select
           name="region"
           id="region"

@@ -18,18 +18,18 @@ function App() {
   const [countryId, setCountryId] = useState(null);
   const [fetchedData, setFetchedData] = useState([]);
   const [defaultURL, setDefaultURL] = useState(
-    "https://restcountries.com/v3.1/all"
+    "https://restcountries.com/v3.1/region/europe"
   );
   const [allCountriesData, setAllCountriesData] = useState([]);
   let regionFetchText = `https://restcountries.com/v3.1/region/${region}`;
   let countryFetchText = `https://restcountries.com/v3.1/name/${country}`;
 
   useEffect(() => {
-    fetch('https://restcountries.com/v3.1/all')
-    .then((res) => res.json())
-    .then((data) => setAllCountriesData(data));
+    fetch("https://restcountries.com/v3.1/all")
+      .then((res) => res.json())
+      .then((data) => setAllCountriesData(data));
     console.log(allCountriesData);
-  },[defaultURL])
+  }, [defaultURL]);
 
   useEffect(() => {
     fetch(`${defaultURL}`)
@@ -51,19 +51,16 @@ function App() {
         setIsPending(false);
         console.log(error);
       });
-      
   }, [defaultURL]);
 
-
   function themeToggle() {
-    document.body.classList.toggle('dark');
-    if(document.body.classList.contains('dark')) {
-      document.body.style.backgroundColor = 'hsl(200, 15%, 8%)';
+    document.body.classList.toggle("dark");
+    if (document.body.classList.contains("dark")) {
+      document.body.style.backgroundColor = "hsl(200, 15%, 8%)";
     } else {
-      document.body.style.backgroundColor = '#f1f5f9';
-      
+      document.body.style.backgroundColor = "#f1f5f9";
     }
-    setIsDark(isDark => !isDark);
+    setIsDark((isDark) => !isDark);
     console.log("theme toggle func ran.");
   }
 
@@ -73,12 +70,12 @@ function App() {
 
   function regionFilterHandler() {
     setDefaultURL(regionFetchText);
-    setRegion('none');
+    setRegion("none");
   }
 
   function countrySearchHandler() {
     setDefaultURL(countryFetchText);
-    setCountry('');
+    setCountry("");
   }
 
   function countryInputHandler(c) {
@@ -96,7 +93,7 @@ function App() {
   }
   return (
     <div className="top-container">
-      <Navbar toggleTheme={themeToggle} isDark={isDark}/>
+      <Navbar toggleTheme={themeToggle} isDark={isDark} />
       {!isDetailClicked ? (
         <>
           <Inputs
@@ -109,9 +106,7 @@ function App() {
           />
           {isPending && <Pending />}
           {!isWorking && <Error />}
-          <div
-            className="cards-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-12 w-full mb-12 gap-12"
-          >
+          <div className="cards-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-12 w-full mb-12 gap-12">
             {isWorking &&
               !isPending &&
               fetchedData.map((country, id) => (
